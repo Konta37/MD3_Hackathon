@@ -227,7 +227,14 @@ CREATE PROCEDURE CreateOrder(
 )
 BEGIN
     -- Generate a new order ID based on the current maximum ID
-    -- concat 
+    
+    -- SUBSTRING là để biến H001 thành 001 (bỏ kí tự)
+    -- Cast biến 010 thành số nguyên 10
+    -- COALESCE gán giá trị mặc định khi ko tìm thấy max = 0
+    -- + 1 thì thành 10 + 1  =  11
+    -- LPAD chọn phần tử ko null và chuyển từ 11 thành 011
+	-- concat ghep chuoi 'H' + '011'
+    
     SET newOrderId = (
         SELECT CONCAT('H', LPAD(COALESCE(MAX(CAST(SUBSTRING(order_id, 2) AS UNSIGNED)), 0) + 1, 3, '0'))
         FROM ORDERS
